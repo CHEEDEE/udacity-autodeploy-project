@@ -15,7 +15,6 @@ jobs:
             cd frontend
             npm install
             npm run build
-            exit 1
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -24,6 +23,11 @@ jobs:
           mentions: '@here'
           event: fail
           template: basic_fail_1
+      - slack/notify:
+          channel: circleci
+          mentions: '@here'
+          event: pass
+          template: success_tagged_deploy_1
 
 
   build-backend:
