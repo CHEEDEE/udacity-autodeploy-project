@@ -155,7 +155,7 @@ jobs:
   steps:
     - checkout
     - add_ssh_keys:
-          fingerprints: [f4:0b:fe:1d:98:82:33:f4:bc:a6:29:d6:e8:bd:24:90]
+        fingerprints: ["f4:0b:fe:1d:98:82:33:f4:bc:a6:29:d6:e8:bd:24:90"]
     - attach_workspace:
         at: ~/
     - run:
@@ -169,10 +169,7 @@ jobs:
           cd .circleci/ansible
           ansible-playbook -i inventory.txt configure-server.yml
     # Here's where you will add some code to rollback on failure
-    - destroy-environment    
-
-      
-  
+    - destroy-environment  
 
 
 workflows:
