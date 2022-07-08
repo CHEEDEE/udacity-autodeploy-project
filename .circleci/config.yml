@@ -150,26 +150,26 @@ jobs:
       - destroy-environment
 
   configure-infrastructure:
-  docker:
-    - image: python:3.7-alpine3.11
-  steps:
-    - checkout
-    - add_ssh_keys:
-        fingerprints: ["f4:0b:fe:1d:98:82:33:f4:bc:a6:29:d6:e8:bd:24:90"]
-    - attach_workspace:
-        at: ~/
-    - run:
-        name: Install dependencies
-        command: |
-          apk add --update ansible
-          
-    - run:
-        name: Configure server
-        command: |
-          cd .circleci/ansible
-          ansible-playbook -i inventory.txt configure-server.yml
-    # Here's where you will add some code to rollback on failure
-    - destroy-environment  
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["f4:0b:fe:1d:98:82:33:f4:bc:a6:29:d6:e8:bd:24:90"]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+            
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment  
 
 
 workflows:
