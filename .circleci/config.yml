@@ -172,7 +172,7 @@ jobs:
       # Here's where you will add some code to rollback on failure
       - destroy-environment
 
- run-migrations:
+  run-migrations:
     docker:
       - image: circleci/node:13.8.0
     steps:
