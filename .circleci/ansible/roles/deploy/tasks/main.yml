@@ -1,6 +1,6 @@
 ---
 
-- name: Create Backend App Directory
+- name: Create backend-app Directory
   become: true
   file:
     path: ./backend-app
