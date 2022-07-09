@@ -1,39 +1,36 @@
 ---
-    - name: "copy backend files"
-      shell:  |
-        ---
-    
-    - name: "create artifact directory"
-      become: true
-      file:
-        path: ./artifact
-        state: directory
-    
-    # - name: "extract archived artifact"
-    #   become: true
-    #   unarchive:
-    #     src: files/artifact.tar.gz
-    #     dest: ./artifact
-    
-    - name: "copy backend files to EC2 instance"
-      become: true
-      copy:
-          src: /root/project/artifact.tar.gz
-          dest: "./artifact"
-          owner: ubuntu
-          mode: 0777
-    
-    - name: "Unzip backend files"
-      become: true
-      shell: |
-        cd ./artifact
-        tar xvzf artifact.tar.gz .
-        rm -rf ./artifact.tar.gz
-      
-    - name: "start app with pm2"
-      become: true
-      shell: |
-        cd ./artifact
-        npm install 
-        pm2 stop default 
-        pm2 start npm -- start
+
+- name: ensure artifact directory exists
+  become: true
+  file:
+    path: ./artifact
+    state: directory
+
+# - name: "extract archived artifact"
+#   become: true
+#   unarchive:
+#     src: files/artifact.tar.gz
+#     dest: ./artifact
+
+- name: "Move backend files to web server"
+  become: true
+  copy:
+      src: /root/project/artifact.tar.gz
+      dest: "./artifact"
+      owner: ubuntu
+      mode: 0777
+
+- name: "Unzip backend files"
+  become: true
+  shell: |
+    cd ./artifact
+    tar xvzf artifact.tar.gz .
+    rm -rf ./artifact.tar.gz
+  
+- name: "start app"
+  become: true
+  shell: |
+    cd ./artifact
+    npm install 
+    pm2 stop default 
+    pm2 start npm -- start
