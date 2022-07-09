@@ -1,0 +1,29 @@
+---
+
+- name: "create artifact directory"
+  become: true
+  file:
+    path: ./artifact
+    state: directory
+
+- name: "extract archived artifact"
+  become: true
+  unarchive:
+    src: files/artifact.tar.gz
+    dest: ./artifact
+
+- name: "copy backend files to EC2 instance"
+  become: true
+  copy:
+      src: /root/project/artifact.tar.gz
+      dest: "./artifact"
+      owner: ubuntu
+      mode: 0777
+  
+- name: "start app with pm2"
+  become: true
+  shell: |
+    cd ./artifact
+    npm install 
+    pm2 stop default 
+    pm2 start npm -- start
