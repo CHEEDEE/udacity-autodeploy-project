@@ -12,7 +12,7 @@
     remote_src: yes
     mode: '0777'
     
-- name: "add node exporter configuration."
+- name: "add node exporter service configuration."
   become: true
   copy:
     src: node_exporter.service
