@@ -245,20 +245,25 @@ jobs:
   
   deploy-backend:
     docker:
-      - image:  python:3.7-alpine3.11
+      - image: python:3.7-alpine3.11
+    
     steps:
       - checkout
+
       - restore_cache:
           keys: [backend-build]
+
       - add_ssh_keys:
-          fingerprints: ["f4:0b:fe:1d:98:82:33:f4:bc:a6:29:d6:e8:bd:24:90"]
-      - attach_workspace:
+          fingerprints: ["fb:32:9d:12:f7:b4:a3:9f:94:28:ca:45:ee:68:c2:37"] 
+      
+      - attach_workspace: 
           at: ~/
+
       - run:
-          name: Install ansible
+          name: Install dependencies
           command: |
-            apk add --update ansible nodejs npm tar gzip openssh
-            pip install awscli
+            apk add --update tar gzip ansible openssh nodejs npm 
+            pip3 install awscli 
       - run:
           name: Deploy backend
           command: |
@@ -267,8 +272,10 @@ jobs:
             npm run build
             cd ..
             # Zip the directory
-            tar -C backend -czvf artifact.tar.gz .
-            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
+            tar -C backend -czvf artifact.tar.gz . 
+            export TYPEORM_MIGRATIONS_DIR=./migrations
+            export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
+            export TYPEORM_MIGRATIONS=./migrations/*.ts
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
