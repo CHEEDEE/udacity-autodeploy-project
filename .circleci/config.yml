@@ -405,7 +405,6 @@ jobs:
               echo "Error: Cannot cleanup stack"
             fi
 
-
 workflows:
   my_workflow:
     jobs:
