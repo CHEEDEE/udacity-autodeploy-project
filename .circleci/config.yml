@@ -308,6 +308,7 @@ jobs:
       - destroy-environment
       - revert-migrations
 
+
   smoke-test:
     docker:
       - image: amazon/aws-cli
