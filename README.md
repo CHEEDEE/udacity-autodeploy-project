@@ -15,9 +15,6 @@ A CI-CD pipeline for a client/server TypeScript project with backend hosted on A
 * [kvdb api bucket](https://kvdb.io/)
 * [Slack api App and Workspace](https://slack.com/)
 
-## Project Submission  
-![Project Steps](./screenshots%20taken/project-steps.jpg)
-
 ## Project files
 Relevant project files
 
